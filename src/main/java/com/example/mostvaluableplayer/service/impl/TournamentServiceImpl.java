@@ -11,6 +11,7 @@ import com.example.mostvaluableplayer.service.TournamentService;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class TournamentServiceImpl implements TournamentService {
 
@@ -26,8 +27,11 @@ public class TournamentServiceImpl implements TournamentService {
 
 
     @Override
-    public void tournamentProcessingFromFiles(String path) {
-        fileDTOs = fileService.getFileDTOList(path);
+    public void tournamentProcessingFromFiles(Set<String> files) {
+        for (String file :
+                files) {
+            fileDTOs = fileService.getFileDTOList(file);
+        }
 
         Tournament tournament = new Tournament();
         for (FileDTO fileDTO :
