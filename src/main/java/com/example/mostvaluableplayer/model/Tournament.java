@@ -16,12 +16,12 @@ public class Tournament {
     private Player mvp;
     private List<String> gameTypes = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "Tournament{" +
-                "players=" + players +
-                ", matches=" + games +
-                ", mvp=" + mvp +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Tournament{" +
+//                "players=" + players +
+//                ", matches=" + games +
+//                ", mvp=" + mvp +
+//                '}';
+//    }
 }

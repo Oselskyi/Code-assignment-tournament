@@ -19,12 +19,13 @@ public class Reader implements FileService {
         List<FileDTO> fileDTOS = new ArrayList<>();
 
         FileDTO fileDTO = new FileDTO();
-//        File[] receivedFiles = new File(filePath).listFiles();
-//        for (File file : receivedFiles) {
-//            checkFileFormat(file);
+        File[] receivedFiles = new File(filePath).listFiles();
+        for (File file : receivedFiles) {
+            checkFileFormat(file);
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                BufferedReader reader = new BufferedReader(new FileReader(file));
                 String game = reader.readLine();
+                fileDTO = new FileDTO();
                 checkGameType(game);
                 fileDTO.setGameName(game);
                 while (reader.ready()) {
@@ -35,7 +36,7 @@ public class Reader implements FileService {
             }
 
             fileDTOS.add(fileDTO);
-//        }
+        }
         return fileDTOS;
     }
 

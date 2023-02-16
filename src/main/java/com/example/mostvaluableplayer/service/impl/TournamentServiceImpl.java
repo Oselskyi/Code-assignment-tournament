@@ -26,18 +26,23 @@ public class TournamentServiceImpl {
         for (FileDTO fileDTO :
                 fileDTOS) {
             GameService gameService = gameServiceFactory.getGameService(fileDTO.getGameName());
-            players = gameService.calculateRating(fileDTO);
+            players.addAll(gameService.calculateRating(fileDTO));
         }
-
-
-        Player mvp = defineMvp(players);
+        List<Player> mvpCandidates = calculatePlayerRatingForAllGames(players);
+        Player mvp = defineMvp(mvpCandidates);
         System.out.println(mvp);
         return mvp;
     }
 
+    private List<Player> calculatePlayerRatingForAllGames(List<Player> players) {
+        Map<String, Integer> playersMap = players.stream().collect(Collectors.groupingBy(Player::getNickname, Collectors.summingInt(Player::getRating)));
+
+        return null;
+    }
+
     public Player defineMvp(List<Player> players) {
-        Map<String, Integer> map = players.stream().collect(Collectors.groupingBy(Player::getNickname, Collectors.summingInt(Player::getRating)));
-        Map.Entry<String, Integer> stringIntegerEntry = map.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
+//        Map<String, Integer> map = players.stream().collect(Collectors.groupingBy(Player::getNickname, Collectors.summingInt(Player::getRating)));
+//        Map.Entry<String, Integer> stringIntegerEntry = map.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
 
         return players.stream().max(Comparator.comparing(Player::getRating)).orElse(null);
 

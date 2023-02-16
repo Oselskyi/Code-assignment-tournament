@@ -14,6 +14,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        tournamentService.playTournament("src/main/resources/games/handball.csv");
+        tournamentService.playTournament("src/main/resources/games");
     }
 }
