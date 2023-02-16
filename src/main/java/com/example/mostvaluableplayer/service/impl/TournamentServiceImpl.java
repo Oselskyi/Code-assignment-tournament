@@ -2,6 +2,7 @@ package com.example.mostvaluableplayer.service.impl;
 
 import com.example.mostvaluableplayer.dto.FileDTO;
 import com.example.mostvaluableplayer.model.Player;
+import com.example.mostvaluableplayer.model.PlayerStats;
 import com.example.mostvaluableplayer.service.GameService;
 import org.springframework.stereotype.Service;
 
@@ -22,29 +23,35 @@ public class TournamentServiceImpl {
 
     public Player playTournament(String filePath) {
         List<FileDTO> fileDTOS = reader.readFile(filePath);
-        List<Player> players = new ArrayList<>();
+        List<PlayerStats> playerStats = new ArrayList<>();
         for (FileDTO fileDTO :
                 fileDTOS) {
             GameService gameService = gameServiceFactory.getGameService(fileDTO.getGameName());
-            players.addAll(gameService.calculateRating(fileDTO));
+            playerStats.addAll(gameService.calculateRating(fileDTO));
         }
-        List<Player> mvpCandidates = calculatePlayerRatingForAllGames(players);
-        Player mvp = defineMvp(mvpCandidates);
+        Player mvp = defineMvp(playerStats);
         System.out.println(mvp);
         return mvp;
     }
 
-    private List<Player> calculatePlayerRatingForAllGames(List<Player> players) {
-        Map<String, Integer> playersMap = players.stream().collect(Collectors.groupingBy(Player::getNickname, Collectors.summingInt(Player::getRating)));
+    public Player defineMvp(List<PlayerStats> playerStatistics) {
+        Map<String, Integer> map = playerStatistics.stream().collect(Collectors.groupingBy(PlayerStats::getNickname, Collectors.summingInt(PlayerStats::getRating)));
 
-        return null;
-    }
+        Set<Player> players = new HashSet<>();
 
-    public Player defineMvp(List<Player> players) {
-//        Map<String, Integer> map = players.stream().collect(Collectors.groupingBy(Player::getNickname, Collectors.summingInt(Player::getRating)));
-//        Map.Entry<String, Integer> stringIntegerEntry = map.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
-
+        for (PlayerStats playerStats :
+                playerStatistics) {
+            players.add(playerToPlayerDTO(playerStats, map));
+        }
         return players.stream().max(Comparator.comparing(Player::getRating)).orElse(null);
 
+    }
+
+    private Player playerToPlayerDTO(PlayerStats playerStats, Map<String, Integer> map) {
+        Player player = new Player();
+        player.setName(playerStats.getName());
+        player.setNickname(playerStats.getNickname());
+        player.setRating(map.get(playerStats.getNickname()));
+        return player;
     }
 }

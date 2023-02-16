@@ -1,10 +1,11 @@
 package com.example.mostvaluableplayer.service.impl;
 
 import com.example.mostvaluableplayer.dto.FileDTO;
-import com.example.mostvaluableplayer.model.HandballPlayer;
-import com.example.mostvaluableplayer.model.Player;
+import com.example.mostvaluableplayer.model.HandballPlayerStats;
+import com.example.mostvaluableplayer.model.PlayerStats;
 import com.example.mostvaluableplayer.service.GameService;
-import com.example.mostvaluableplayer.service.PlayerService;
+import com.example.mostvaluableplayer.service.PlayerStatsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,48 +13,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class HandballService implements GameService {
 
-    private final PlayerService<HandballPlayer> handballPlayerPlayerService;
+    private final PlayerStatsService<HandballPlayerStats> handballPlayerPlayerStatsService;
+    private final TeamServiceImpl teamService;
 
-    public HandballService(PlayerService<HandballPlayer> handballPlayerPlayerService) {
-        this.handballPlayerPlayerService = handballPlayerPlayerService;
-    }
+    public List<PlayerStats> calculateRating(FileDTO fileDTO) {
 
-    public List<Player> calculateRating(FileDTO fileDTO) {
-
-        List<HandballPlayer> players = handballPlayerPlayerService.getPlayers(fileDTO.getLines());
-        List<Player> ratedPlayers = new ArrayList<>();
+        List<HandballPlayerStats> players = handballPlayerPlayerStatsService.getPlayerStats(fileDTO.getLines());
+        List<PlayerStats> ratedPlayerStats = new ArrayList<>();
         String winner = defineWinners(players);
-        for (HandballPlayer player:
+        for (HandballPlayerStats player :
                 players) {
             calculateGameRating(player, winner);
-            ratedPlayers.add(player);
+            ratedPlayerStats.add(player);
         }
-        return ratedPlayers;
+        return ratedPlayerStats;
     }
 
-    public String defineWinners(List<HandballPlayer> players) {
-        String winner = "";
-        int maxScore = 0;
+    public String defineWinners(List<HandballPlayerStats> players) {
         var teamScoreMap = players.stream()
-                .collect(Collectors.groupingBy(Player::getTeamName, Collectors.summingInt(HandballPlayer::getGoalMade)));
+                .collect(Collectors.groupingBy(PlayerStats::getTeamName, Collectors.summingInt(HandballPlayerStats::getGoalMade)));
 
-        for (String team :
-                teamScoreMap.keySet()) {
-            Integer score = teamScoreMap.get(team);
-            if (score > maxScore) {
-                winner = team;
-                maxScore = score;
-            }
-        }
-        return winner;
+        return teamService.getWinner(teamScoreMap);
     }
 
-    public void calculateGameRating(HandballPlayer player, String winnerTeam) {
+    public void calculateGameRating(HandballPlayerStats player, String winnerTeam) {
         int rating = player.getGoalMade() * 2
                 - player.getGoalReceive();
-        if (player.getTeamName().equals(winnerTeam)){
+        if (player.getTeamName().equals(winnerTeam)) {
             rating += 10;
         }
         player.setRating(rating);

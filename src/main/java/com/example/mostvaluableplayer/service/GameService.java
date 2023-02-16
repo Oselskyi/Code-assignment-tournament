@@ -1,10 +1,10 @@
 package com.example.mostvaluableplayer.service;
 
 import com.example.mostvaluableplayer.dto.FileDTO;
-import com.example.mostvaluableplayer.model.Player;
+import com.example.mostvaluableplayer.model.PlayerStats;
 
 import java.util.List;
 
 public interface GameService {
-    List<Player> calculateRating(FileDTO fileDTO);
+    List<PlayerStats> calculateRating(FileDTO fileDTO);
 }

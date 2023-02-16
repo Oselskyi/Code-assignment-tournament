@@ -9,7 +9,10 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class HandballPlayer extends Player {
-    private int goalMade;
-    private int goalReceive;
+public class BasketballPlayerStats extends PlayerStats {
+    private int scoredPoints;
+    private int rebounds;
+    private int assist;
+
+
 }

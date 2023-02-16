@@ -11,17 +11,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Tournament {
-    private List<Player> players = new ArrayList<>();
+    private List<PlayerStats> playerStats = new ArrayList<>();
     private List<Game> games = new ArrayList<>();
-    private Player mvp;
+    private PlayerStats mvp;
     private List<String> gameTypes = new ArrayList<>();
 
-//    @Override
-//    public String toString() {
-//        return "Tournament{" +
-//                "players=" + players +
-//                ", matches=" + games +
-//                ", mvp=" + mvp +
-//                '}';
-//    }
+
 }

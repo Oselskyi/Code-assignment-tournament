@@ -9,10 +9,12 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class BasketballPlayer extends Player {
-    private int scoredPoints;
-    private int rebounds;
-    private int assist;
+public class PlayerStats {
 
+    private String name;
+    private String nickname;
+    private int number;
+    private String teamName;
+    private int rating;
 
 }

@@ -14,10 +14,10 @@ import java.util.List;
 @ToString
 public class Team {
     private String name;
-    private List<BasketballPlayer> players = new ArrayList<>();
+    private List<BasketballPlayerStats> players = new ArrayList<>();
     private int score;
 
-    public Team(String name, List<BasketballPlayer> players) {
+    public Team(String name, List<BasketballPlayerStats> players) {
         this.name = name;
         this.players = players;
     }

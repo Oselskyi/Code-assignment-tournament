@@ -1,11 +1,11 @@
 package com.example.mostvaluableplayer.service.impl;
 
 import com.example.mostvaluableplayer.dto.FileDTO;
-import com.example.mostvaluableplayer.model.BasketballPlayer;
-import com.example.mostvaluableplayer.model.Player;
-import com.example.mostvaluableplayer.service.FileService;
+import com.example.mostvaluableplayer.model.BasketballPlayerStats;
+import com.example.mostvaluableplayer.model.PlayerStats;
 import com.example.mostvaluableplayer.service.GameService;
-import com.example.mostvaluableplayer.service.PlayerService;
+import com.example.mostvaluableplayer.service.PlayerStatsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,47 +13,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BasketballService implements GameService {
 
+    private final PlayerStatsService<BasketballPlayerStats> basketballPlayerStatsService;
+    private final TeamServiceImpl teamService;
 
-    private final PlayerService<BasketballPlayer> basketballPlayerService;
+    public List<PlayerStats> calculateRating(FileDTO fileDTO) {
 
-
-    public BasketballService(PlayerService<BasketballPlayer> basketballPlayerService) {
-        this.basketballPlayerService = basketballPlayerService;
-    }
-
-    public List<Player> calculateRating(FileDTO fileDTO) {
-
-        List<BasketballPlayer> players = basketballPlayerService.getPlayers(fileDTO.getLines());
-        List<Player> ratedPlayers = new ArrayList<>();
+        List<BasketballPlayerStats> players = basketballPlayerStatsService.getPlayerStats(fileDTO.getLines());
+        List<PlayerStats> ratedPlayerStats = new ArrayList<>();
         String winner = defineWinners(players);
-        for (BasketballPlayer player :
+        for (BasketballPlayerStats player :
                 players) {
             calculateGameRating(player, winner);
-            ratedPlayers.add(player);
+            ratedPlayerStats.add(player);
         }
-        return ratedPlayers;
+        return ratedPlayerStats;
     }
 
-    public String defineWinners(List<BasketballPlayer> players) {
-        String winner = "";
-        int maxScore = 0;
+    public String defineWinners(List<BasketballPlayerStats> players) {
+
         var teamScoreMap = players.stream()
-                .collect(Collectors.groupingBy(Player::getTeamName, Collectors.summingInt(BasketballPlayer::getScoredPoints)));
+                .collect(Collectors.groupingBy(PlayerStats::getTeamName, Collectors.summingInt(BasketballPlayerStats::getScoredPoints)));
 
-        for (String team :
-                teamScoreMap.keySet()) {
-            Integer score = teamScoreMap.get(team);
-            if (score > maxScore) {
-                winner = team;
-                maxScore = score;
-            }
-        }
-        return winner;
+        return teamService.getWinner(teamScoreMap);
     }
 
-    public void calculateGameRating(BasketballPlayer player, String winnerTeam) {
+    public void calculateGameRating(BasketballPlayerStats player, String winnerTeam) {
         int rating = player.getScoredPoints() * 2
                 + player.getAssist()
                 + player.getRebounds();
