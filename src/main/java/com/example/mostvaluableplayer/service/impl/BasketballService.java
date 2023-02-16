@@ -5,6 +5,7 @@ import com.example.mostvaluableplayer.model.BasketballPlayerStats;
 import com.example.mostvaluableplayer.model.PlayerStats;
 import com.example.mostvaluableplayer.service.GameService;
 import com.example.mostvaluableplayer.service.PlayerStatsService;
+import com.example.mostvaluableplayer.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class BasketballService implements GameService {
 
     private final PlayerStatsService<BasketballPlayerStats> basketballPlayerStatsService;
-    private final TeamServiceImpl teamService;
+    private final TeamService teamService;
 
     public List<PlayerStats> calculateRating(FileDTO fileDTO) {
 

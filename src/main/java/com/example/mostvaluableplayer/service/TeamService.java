@@ -1,10 +1,7 @@
 package com.example.mostvaluableplayer.service;
 
-import com.example.mostvaluableplayer.model.Team;
-
-import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 public interface TeamService {
-    Optional<Team> getTeamByName(List<Team> teams, String name);
+    String getWinner(Map<String, Integer> teamScoreMap);
 }
