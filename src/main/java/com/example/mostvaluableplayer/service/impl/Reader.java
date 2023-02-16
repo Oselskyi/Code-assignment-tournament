@@ -1,31 +1,50 @@
 package com.example.mostvaluableplayer.service.impl;
 
 import com.example.mostvaluableplayer.dto.FileDTO;
-import com.example.mostvaluableplayer.model.Game;
+import com.example.mostvaluableplayer.model.GameType;
+import com.example.mostvaluableplayer.service.FileService;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 
-public class Reader {
+@Service
+public class Reader implements FileService {
 
-    public static FileDTO readFile(String file) throws IOException {
+    @Override
+    public List<FileDTO> readFile(String filePath) {
+        List<FileDTO> fileDTOS = new ArrayList<>();
+
         FileDTO fileDTO = new FileDTO();
-        String line = "";
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String game = reader.readLine();
-        checkGameType(game);
-        fileDTO.setGameName(game);
-        while ((line = reader.readLine()) != null) {
-            fileDTO.setLines(Arrays.asList(line.split(",")));
-        }
+//        File[] receivedFiles = new File(filePath).listFiles();
+//        for (File file : receivedFiles) {
+//            checkFileFormat(file);
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                String game = reader.readLine();
+                checkGameType(game);
+                fileDTO.setGameName(game);
+                while (reader.ready()) {
+                    fileDTO.getLines().add(reader.readLine());
+                }
+            } catch (IOException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
 
-        return fileDTO;
+            fileDTOS.add(fileDTO);
+//        }
+        return fileDTOS;
+    }
+
+    private static void checkFileFormat(File file) {
+        if (!file.getName().endsWith("csv")) throw new RuntimeException("Create own exception");
     }
 
     private static void checkGameType(String game) {
-        if (!Arrays.stream(Game.values()).map(Game::getName).toList().contains(game)) {
+        if (!Arrays.stream(GameType.values()).map(GameType::getName).toList().contains(game)) {
             throw new RuntimeException("//todo: Create own exception");
         }
     }

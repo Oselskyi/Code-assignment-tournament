@@ -1,20 +1,14 @@
-package com.example.mostvaluableplayer.model;
+package com.example.mostvaluableplayer.dto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
-public class Player {
-
+public class PlayerDTO {
     private String name;
     private String nickname;
-    private int number;
-    private String teamName;
     private int rating;
-
 }

@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface FileService {
 
-    void getPathListByFolderPath(String path);
-    List<FileDTO> getFileDTOList(String path);
+    List<FileDTO> readFile(String filePath);
 }

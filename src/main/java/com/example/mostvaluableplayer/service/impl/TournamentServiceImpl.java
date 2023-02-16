@@ -1,79 +1,45 @@
 package com.example.mostvaluableplayer.service.impl;
 
 import com.example.mostvaluableplayer.dto.FileDTO;
-import com.example.mostvaluableplayer.model.Match;
 import com.example.mostvaluableplayer.model.Player;
-import com.example.mostvaluableplayer.model.Tournament;
-import com.example.mostvaluableplayer.service.FileService;
-import com.example.mostvaluableplayer.service.MatchService;
-import com.example.mostvaluableplayer.service.TournamentService;
+import com.example.mostvaluableplayer.service.GameService;
+import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class TournamentServiceImpl implements TournamentService {
+@Service
+public class TournamentServiceImpl {
 
-    private final FileService fileService;
-    private final MatchService matchService;
+    private final Reader reader;
+    private final GameServiceFactory gameServiceFactory;
 
-    private List<FileDTO> fileDTOs;
+    public TournamentServiceImpl(Reader reader, GameServiceFactory gameServiceFactory) {
+        this.reader = reader;
+        this.gameServiceFactory = gameServiceFactory;
 
-    public TournamentServiceImpl(FileService fileService, MatchService matchService) {
-        this.fileService = fileService;
-        this.matchService = matchService;
     }
 
-
-    @Override
-    public void tournamentProcessingFromFiles(Set<String> files) {
-        for (String file :
-                files) {
-            fileDTOs = fileService.getFileDTOList(file);
-        }
-
-        Tournament tournament = new Tournament();
+    public Player playTournament(String filePath) {
+        List<FileDTO> fileDTOS = reader.readFile(filePath);
+        List<Player> players = new ArrayList<>();
         for (FileDTO fileDTO :
-                fileDTOs) {
-            Match match = matchService.parseFileDTOToMatch(fileDTO);
-            tournament.getMatches().add(match);
+                fileDTOS) {
+            GameService gameService = gameServiceFactory.getGameService(fileDTO.getGameName());
+            players = gameService.calculateRating(fileDTO);
         }
 
-        setPlayerListForTournament(tournament);
-        setMvp(tournament);
-        System.out.println(tournament.getMvp());
+
+        Player mvp = defineMvp(players);
+        System.out.println(mvp);
+        return mvp;
     }
 
-    @Override
-    public void setMvp(Tournament tournament) {
-        tournament.setMvp(tournament.getPlayers().stream()
-                .max(Comparator.comparing(Player::getRating))
-                .get());
-    }
+    public Player defineMvp(List<Player> players) {
+        Map<String, Integer> map = players.stream().collect(Collectors.groupingBy(Player::getNickname, Collectors.summingInt(Player::getRating)));
+        Map.Entry<String, Integer> stringIntegerEntry = map.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
 
-    @Override
-    public void setPlayerListForTournament(Tournament tournament) {
-        for (Match match : tournament.getMatches()) {
-            for (Player player : match.getPlayers()) {
-                Optional<Player> playerByNickname = findPlayerByNickNameInTournament(tournament, player.getNickname());
-                if (playerByNickname.isPresent()) {
-                    playerByNickname.get().addRatingPoints(player.getRating());
-                } else {
-                    Player newPlayer = new Player();
-                    newPlayer.setNickname(player.getNickname());
-                    newPlayer.setRating(player.getRating());
-                    tournament.getPlayers().add(newPlayer);
-                }
-            }
-        }
-    }
+        return players.stream().max(Comparator.comparing(Player::getRating)).orElse(null);
 
-    @Override
-    public Optional<Player> findPlayerByNickNameInTournament(Tournament tournament, String nickname) {
-        return Optional.of(tournament.getPlayers().stream()
-                .filter(player -> player.getNickname().equals(nickname))
-                .findFirst())
-                .orElse(Optional.empty());
     }
 }

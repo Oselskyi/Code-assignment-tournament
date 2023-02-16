@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Tournament {
     private List<Player> players = new ArrayList<>();
-    private List<Match> matches = new ArrayList<>();
+    private List<Game> games = new ArrayList<>();
     private Player mvp;
     private List<String> gameTypes = new ArrayList<>();
 
@@ -20,7 +20,7 @@ public class Tournament {
     public String toString() {
         return "Tournament{" +
                 "players=" + players +
-                ", matches=" + matches +
+                ", matches=" + games +
                 ", mvp=" + mvp +
                 '}';
     }

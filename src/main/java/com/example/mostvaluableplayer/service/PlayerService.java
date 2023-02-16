@@ -1,11 +1,10 @@
 package com.example.mostvaluableplayer.service;
 
-import com.example.mostvaluableplayer.model.Match;
 import com.example.mostvaluableplayer.model.Player;
+
+import java.util.List;
 
 public interface PlayerService<T extends Player> {
 
-    T parseLineToPlayer(String line);
-    void calculateRatingPoints(T player);
-    void addRatingPointsForWinner(Match match);
+    List<T> getPlayers(List<String> lines);
 }

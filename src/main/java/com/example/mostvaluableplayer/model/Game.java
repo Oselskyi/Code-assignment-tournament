@@ -1,12 +1,19 @@
 package com.example.mostvaluableplayer.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@AllArgsConstructor
+import java.util.*;
+
 @Getter
-public enum Game {
-    BASKETBALL("BASKETBALL"), HANDBALL("HANDBALL");
-
+@Setter
+@NoArgsConstructor
+@ToString
+public class Game {
     private String name;
+    private List <Team> teams = new ArrayList<>();
+//    private List<Player> players = new ArrayList<>();
+    private Team winner;
 }
