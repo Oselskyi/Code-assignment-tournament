@@ -2,6 +2,7 @@ package com.example.mostvaluableplayer.gateway;
 
 import com.example.mostvaluableplayer.exception.NotValidLineException;
 import com.example.mostvaluableplayer.model.BasketballPlayer;
+import com.example.mostvaluableplayer.model.HandballPlayer;
 import com.example.mostvaluableplayer.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,19 +10,19 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BasketballPlayerStatsGatewayTest {
+class HandballPlayerStatsGatewayTest {
 
     private PlayerStatsGateway playerStatsGateway;
-    private BasketballPlayer player;
+    private HandballPlayer player;
 
     @BeforeEach
     void setUp() {
-        playerStatsGateway = new BasketballPlayerStatsGateway();
+        playerStatsGateway = new HandballPlayerStatsGateway();
     }
 
     @Test
     void shouldThrowNotValidLineExceptionWhenLineIsNotValidTest() {
-        String invalidLine = "player 1;nick1;4;10;Team A;2;7";
+        String invalidLine = "player 1;nick1;a;Team A;0;10";
 
         assertThatThrownBy(() -> playerStatsGateway.convertToPlayerStats(invalidLine))
                 .isInstanceOf(NotValidLineException.class)
@@ -30,8 +31,8 @@ class BasketballPlayerStatsGatewayTest {
 
     @Test
     void convertToPlayerStatsReturnValidPlayerIfInputLineIsValidTest() {
-        player = new BasketballPlayer("player 1", "nick1", 4, "Team A", 10, 2, 7);
-        String line = "player 1;nick1;4;Team A;10;2;7";
+        player = new HandballPlayer("player 1", "nick1", 4, "Team A", 0, 10);
+        String line = "player 1;nick1;4;Team A;0;10";
         Player actualPlayer =  playerStatsGateway.convertToPlayerStats(line);
 
         assertEquals(player, actualPlayer);
