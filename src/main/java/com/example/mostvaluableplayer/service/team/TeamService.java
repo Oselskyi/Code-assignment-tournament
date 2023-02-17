@@ -1,4 +1,4 @@
-package com.example.mostvaluableplayer.service;
+package com.example.mostvaluableplayer.service.team;
 
 import java.util.Map;
 

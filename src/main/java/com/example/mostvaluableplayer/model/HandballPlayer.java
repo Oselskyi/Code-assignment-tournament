@@ -7,11 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Player {
-
-    private String name;
-    private String nickname;
-    private int number;
-    private String teamName;
-
+public class HandballPlayer extends Player {
+    private int goalMade;
+    private int goalReceive;
 }

@@ -1,6 +1,5 @@
-package com.example.mostvaluableplayer.service.impl;
+package com.example.mostvaluableplayer.service.team;
 
-import com.example.mostvaluableplayer.service.TeamService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

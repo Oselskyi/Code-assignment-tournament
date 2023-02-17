@@ -2,11 +2,17 @@ package com.example.mostvaluableplayer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
-public enum GameType {
+@ToString
+public enum Sport {
     BASKETBALL("BASKETBALL"), HANDBALL("HANDBALL");
 
     private String name;
+
+    public String getName() {
+        return name;
+    }
 }

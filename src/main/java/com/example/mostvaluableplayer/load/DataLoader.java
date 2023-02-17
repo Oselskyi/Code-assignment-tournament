@@ -1,6 +1,6 @@
 package com.example.mostvaluableplayer.load;
 
-import com.example.mostvaluableplayer.service.impl.TournamentServiceImpl;
+import com.example.mostvaluableplayer.service.tournament.TournamentServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +14,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        tournamentService.playTournament("src/main/resources/games");
+        System.out.println(tournamentService.playTournament("src/main/resources/games"));
     }
 }
