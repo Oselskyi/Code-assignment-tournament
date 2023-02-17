@@ -24,15 +24,11 @@ public class HandballService implements GameService<HandballPlayer> {
     public List<Sportsman> calculateRatingForEveryPlayer(GameStats gameStats) {
 
         List<HandballPlayer> handballPlayers = handballPlayerPlayerStatsGateway.parseGameStatsToPlayers(gameStats.getLines());
-        List<Sportsman> ratedPlayers = new ArrayList<>();
         String winner = defineWinners(handballPlayers);
-        for (HandballPlayer handballPlayer :
-                handballPlayers) {
-            Sportsman sportsman = new Sportsman(handballPlayer.getNickname(), calculateGameRating(handballPlayer, winner));
 
-            ratedPlayers.add(sportsman);
-        }
-        return ratedPlayers;
+        return handballPlayers.stream()
+                .map(player -> new Sportsman(player.getNickname(), calculateGameRating(player, winner)))
+                .collect(Collectors.toList());
     }
 
     private String defineWinners(List<HandballPlayer> playerStatsList) {
@@ -42,7 +38,7 @@ public class HandballService implements GameService<HandballPlayer> {
         return teamService.getWinner(teamScoreMap);
     }
 
-    private int calculateGameRating(HandballPlayer player, String winnerTeam) {
+    public int calculateGameRating(HandballPlayer player, String winnerTeam) {
         int rating = player.getGoalMade() * 2 - player.getGoalReceive();
         if (player.getTeamName().equals(winnerTeam)) {
             rating += 10;

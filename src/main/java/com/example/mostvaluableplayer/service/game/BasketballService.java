@@ -38,7 +38,7 @@ public class BasketballService implements GameService<BasketballPlayer> {
         return teamService.getWinner(teamScoreMap);
     }
 
-    private int calculateGameRating(BasketballPlayer player, String winnerTeam) {
+    public int calculateGameRating(BasketballPlayer player, String winnerTeam) {
         int rating = player.getScoredPoints() * 2
                 + player.getAssist()
                 + player.getRebounds();

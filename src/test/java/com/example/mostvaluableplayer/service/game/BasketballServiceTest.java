@@ -47,7 +47,7 @@ class BasketballServiceTest {
                 new BasketballPlayer("player 4", "nick4", 16, "Team B", 20, 0, 0),
                 new BasketballPlayer("player 5", "nick5", 23, "Team B", 4, 7, 7),
                 new BasketballPlayer("player 6", "nick6", 42, "Team B", 8, 10, 0)
-                );
+        );
     }
 
     @Test
@@ -69,8 +69,25 @@ class BasketballServiceTest {
         assertEquals(6, playerList.size());
     }
 
-//    @Test
-//    void calculateRating(){
-//        gameService.ca
-//    }
+    @Test
+    void calculateRatingPlayerIfTeamWonGameTest() {
+        var player = new BasketballPlayer("player 1", "nick1", 4,
+                "Team A", 10, 2, 7);
+
+        var actualRating = new BasketballService(new BasketballPlayerStatsGateway(), new TeamServiceImpl())
+                .calculateGameRating(player, player.getTeamName());
+
+        assertEquals(39, actualRating);
+    }
+
+    @Test
+    void calculateRatingPlayerIfTeamLooseGameTest() {
+        var player = new BasketballPlayer("player 1", "nick1", 4,
+                "Team A", 10, 2, 7);
+
+        var actualRating = new BasketballService(new BasketballPlayerStatsGateway(), new TeamServiceImpl())
+                .calculateGameRating(player, "fake team");
+
+        assertEquals(29, actualRating);
+    }
 }
