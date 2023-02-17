@@ -4,7 +4,7 @@ import com.example.mostvaluableplayer.model.GameStats;
 import com.example.mostvaluableplayer.model.Sportsman;
 import com.example.mostvaluableplayer.service.game.GameService;
 import com.example.mostvaluableplayer.service.game.GameServiceFactory;
-import com.example.mostvaluableplayer.service.input.Reader;
+import com.example.mostvaluableplayer.service.input.ReaderFromCSV;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 @Service
 public class TournamentServiceImpl {
 
-    private final Reader reader;
+    private final ReaderFromCSV readerFromCSV;
     private final GameServiceFactory gameServiceFactory;
 
-    public TournamentServiceImpl(Reader reader, GameServiceFactory gameServiceFactory) {
-        this.reader = reader;
+    public TournamentServiceImpl(ReaderFromCSV readerFromCSV, GameServiceFactory gameServiceFactory) {
+        this.readerFromCSV = readerFromCSV;
         this.gameServiceFactory = gameServiceFactory;
 
     }
 
     public Sportsman playTournament(String filesPath) {
-        List<GameStats> gameStatsList = reader.readFile(filesPath);
+        List<GameStats> gameStatsList = readerFromCSV.readFile(filesPath);
         List<Sportsman> sportsmanList = new ArrayList<>();
         for (GameStats gameStats : gameStatsList) {
             GameService gameService = gameServiceFactory.getGameService(gameStats.getGameName());

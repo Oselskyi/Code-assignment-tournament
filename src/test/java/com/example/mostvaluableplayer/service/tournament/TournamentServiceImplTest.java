@@ -2,7 +2,7 @@ package com.example.mostvaluableplayer.service.tournament;
 
 import com.example.mostvaluableplayer.model.Sportsman;
 import com.example.mostvaluableplayer.service.game.GameServiceFactory;
-import com.example.mostvaluableplayer.service.input.Reader;
+import com.example.mostvaluableplayer.service.input.ReaderFromCSV;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -20,7 +20,7 @@ class TournamentServiceImplTest {
             new Sportsman("n1", 15)
         );
 
-        var result = new TournamentServiceImpl(new Reader(), new GameServiceFactory()).defineMvp(ratings);
+        var result = new TournamentServiceImpl(new ReaderFromCSV(), new GameServiceFactory()).defineMvp(ratings);
 
         assertEquals(new Sportsman("n1", 25), result);
     }
