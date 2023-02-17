@@ -6,6 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class BasketballPlayer extends Player {
     private int scoredPoints;
     private int rebounds;

@@ -1,5 +1,7 @@
 package com.example.mostvaluableplayer.service.input;
 
+import com.example.mostvaluableplayer.exception.SportTypeException;
+import com.example.mostvaluableplayer.exception.WrongFormatFileException;
 import com.example.mostvaluableplayer.model.GameStats;
 import com.example.mostvaluableplayer.model.Sport;
 import org.springframework.stereotype.Service;
@@ -40,12 +42,12 @@ public class ReaderFromCSV implements Reader {
     }
 
     private static void checkFileFormat(File file) {
-        if (!file.getName().endsWith("csv")) throw new RuntimeException("Create own exception");
+        if (!file.getName().endsWith("csv")) throw new WrongFormatFileException("File should be .csv format");
     }
 
     private static void checkGameType(String game) {
         if (!Arrays.stream(Sport.values()).map(Sport::getName).toList().contains(game)) {
-            throw new RuntimeException("//todo: Create own exception");
+            throw new SportTypeException(game + " is incorrect sport");
         }
     }
 
