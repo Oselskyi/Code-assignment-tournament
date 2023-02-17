@@ -1,10 +1,8 @@
-package com.example.mostvaluableplayer.service.impl;
+package com.example.mostvaluableplayer.service.game;
 
 import com.example.mostvaluableplayer.model.GameStats;
 import com.example.mostvaluableplayer.model.BasketballPlayer;
 import com.example.mostvaluableplayer.model.Sportsman;
-import com.example.mostvaluableplayer.service.game.GameService;
-import com.example.mostvaluableplayer.service.game.BasketballService;
 import com.example.mostvaluableplayer.gateway.BasketballPlayerStatsGateway;
 import com.example.mostvaluableplayer.service.team.TeamServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
