@@ -23,14 +23,15 @@ class BasketballPlayerStatsGatewayTest {
     void shouldThrowNotValidLineExceptionWhenLineIsNotValidTest() {
         String invalidLine = "player 1;nick1;4;10;Team A;2;7";
 
-        assertThatThrownBy(() -> playerStatsGateway.convertToPlayerStats(invalidLine))
-                .isInstanceOf(NotValidLineException.class)
-                .hasMessageContaining("Line " + invalidLine + " is not valid");
+        assertThrows(NotValidLineException.class, () -> playerStatsGateway.convertToPlayerStats(invalidLine),
+                "Line " + invalidLine + " is not valid");
+
     }
 
     @Test
     void convertToPlayerStatsReturnValidPlayerIfInputLineIsValidTest() {
-        player = new BasketballPlayer("player 1", "nick1", 4, "Team A", 10, 2, 7);
+        player = new BasketballPlayer("player 1", "nick1", 4,
+                "Team A", 10, 2, 7);
         String line = "player 1;nick1;4;Team A;10;2;7";
         Player actualPlayer =  playerStatsGateway.convertToPlayerStats(line);
 

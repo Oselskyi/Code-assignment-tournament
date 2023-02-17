@@ -24,14 +24,14 @@ class HandballPlayerStatsGatewayTest {
     void shouldThrowNotValidLineExceptionWhenLineIsNotValidTest() {
         String invalidLine = "player 1;nick1;a;Team A;0;10";
 
-        assertThatThrownBy(() -> playerStatsGateway.convertToPlayerStats(invalidLine))
-                .isInstanceOf(NotValidLineException.class)
-                .hasMessageContaining("Line " + invalidLine + " is not valid");
+        assertThrows(NotValidLineException.class,() -> playerStatsGateway.convertToPlayerStats(invalidLine),
+                "Line " + invalidLine + " is not valid");
     }
 
     @Test
     void convertToPlayerStatsReturnValidPlayerIfInputLineIsValidTest() {
-        player = new HandballPlayer("player 1", "nick1", 4, "Team A", 0, 10);
+        player = new HandballPlayer("player 1", "nick1", 4,
+                "Team A", 0, 10);
         String line = "player 1;nick1;4;Team A;0;10";
         Player actualPlayer =  playerStatsGateway.convertToPlayerStats(line);
 
