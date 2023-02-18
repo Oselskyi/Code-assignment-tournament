@@ -1,5 +1,6 @@
 package com.example.mostvaluableplayer.service.team;
 
+import com.example.mostvaluableplayer.exception.NoWinnerException;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -13,6 +14,9 @@ public class TeamServiceImpl implements TeamService {
         for (String team :
                 teamScoreMap.keySet()) {
             Integer score = teamScoreMap.get(team);
+            if (score == maxScore){
+                throw new NoWinnerException("Every game must have a winner team");
+            }
             if (score > maxScore) {
                 winner = team;
                 maxScore = score;

@@ -51,7 +51,7 @@ class BasketballServiceTest {
     }
 
     @Test
-    void calculateRatingReturnEmptyListIfInputListEmptyTest() {
+    void calculateRatingReturnEmptyListIfInputListIsEmptyTest() {
         List<String> emptyList = new ArrayList<>();
         gameStats = new GameStats("BASKETBALL", emptyList);
 
@@ -61,7 +61,7 @@ class BasketballServiceTest {
     }
 
     @Test
-    void calculateRatingReturnListWithTheSameSizeAsInputListTest() {
+    void calculateRatingShouldReturnListWithTheSameSizeAsInputListTest() {
         gameStats = new GameStats("BASKETBALL", lines);
 
         playerList = gameService.calculateRatingForEveryPlayer(gameStats);
