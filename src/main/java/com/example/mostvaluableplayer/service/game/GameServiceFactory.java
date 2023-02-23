@@ -1,20 +1,27 @@
 package com.example.mostvaluableplayer.service.game;
 
-import com.example.mostvaluableplayer.model.Sport;
-import com.example.mostvaluableplayer.gateway.BasketballPlayerStatsGateway;
-import com.example.mostvaluableplayer.gateway.HandballPlayerStatsGateway;
-import com.example.mostvaluableplayer.service.team.TeamServiceImpl;
+import com.example.mostvaluableplayer.model.SportType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @Component
+@RequiredArgsConstructor
 public class GameServiceFactory {
 
-    public GameService getGameService(String gameType) {
+    private static Map<SportType, GameService> gameServiceMap;
 
-        return switch (Sport.valueOf(gameType)) {
-            case BASKETBALL -> new BasketballService(new BasketballPlayerStatsGateway(), new TeamServiceImpl());
-            case HANDBALL -> new HandballService(new HandballPlayerStatsGateway(), new TeamServiceImpl());
-            default -> throw new RuntimeException("Create own Exception");
-        };
+    private GameServiceFactory(List<GameService> gameServices) {
+        gameServiceMap = gameServices.stream().collect(Collectors.toMap(GameService::getType, Function.identity()));
+    }
+
+    public GameService getGameService(String gameType) {
+        return Optional.ofNullable(gameServiceMap.get(SportType.valueOf(gameType)))
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

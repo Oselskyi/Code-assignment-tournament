@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BasketballServiceTest {
 
-    private GameService<BasketballPlayer> gameService;
+    private GameService gameService;
 
     GameStats gameStats;
     List<String> lines;

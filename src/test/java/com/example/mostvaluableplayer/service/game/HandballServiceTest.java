@@ -1,8 +1,6 @@
 package com.example.mostvaluableplayer.service.game;
 
-import com.example.mostvaluableplayer.gateway.BasketballPlayerStatsGateway;
 import com.example.mostvaluableplayer.gateway.HandballPlayerStatsGateway;
-import com.example.mostvaluableplayer.model.BasketballPlayer;
 import com.example.mostvaluableplayer.model.GameStats;
 import com.example.mostvaluableplayer.model.HandballPlayer;
 import com.example.mostvaluableplayer.model.Sportsman;
@@ -13,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HandballServiceTest {
 
-    private GameService<HandballPlayer> gameService;
+    private GameService gameService;
 
     GameStats gameStats;
     List<String> lines;

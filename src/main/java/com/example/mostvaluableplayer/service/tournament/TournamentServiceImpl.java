@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TournamentServiceImpl {
+public class TournamentServiceImpl implements TournamentService{
 
     private final ReaderFromCSV readerFromCSV;
     private final GameServiceFactory gameServiceFactory;
@@ -32,7 +32,7 @@ public class TournamentServiceImpl {
             sportsmanList.addAll(gameService.calculateRatingForEveryPlayer(gameStats));
         }
 
-        return defineMvp(sportsmanList);//getMvp();
+        return defineMvp(sportsmanList);
     }
 
     public Sportsman defineMvp(List<Sportsman> sportsmen) {
