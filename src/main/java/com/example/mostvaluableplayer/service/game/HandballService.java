@@ -1,24 +1,27 @@
 package com.example.mostvaluableplayer.service.game;
 
-import com.example.mostvaluableplayer.model.GameStats;
-import com.example.mostvaluableplayer.model.HandballPlayer;
-import com.example.mostvaluableplayer.model.Player;
-import com.example.mostvaluableplayer.model.Sportsman;
 import com.example.mostvaluableplayer.gateway.PlayerStatsGateway;
+import com.example.mostvaluableplayer.model.*;
 import com.example.mostvaluableplayer.service.team.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class HandballService implements GameService<HandballPlayer> {
+public class HandballService implements GameService {
 
     private final PlayerStatsGateway<HandballPlayer> handballPlayerPlayerStatsGateway;
     private final TeamService teamService;
+
+    private static final SportType SPORT_TYPE = SportType.HANDBALL;
+
+    @Override
+    public SportType getType() {
+        return SPORT_TYPE;
+    }
 
     @Override
     public List<Sportsman> calculateRatingForEveryPlayer(GameStats gameStats) {

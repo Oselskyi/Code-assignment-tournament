@@ -1,9 +1,6 @@
 package com.example.mostvaluableplayer.service.game;
 
-import com.example.mostvaluableplayer.model.GameStats;
-import com.example.mostvaluableplayer.model.BasketballPlayer;
-import com.example.mostvaluableplayer.model.Sportsman;
-import com.example.mostvaluableplayer.model.Player;
+import com.example.mostvaluableplayer.model.*;
 import com.example.mostvaluableplayer.gateway.PlayerStatsGateway;
 import com.example.mostvaluableplayer.service.team.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +11,17 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BasketballService implements GameService<BasketballPlayer> {
+public class BasketballService implements GameService {
 
     private final PlayerStatsGateway<BasketballPlayer> basketballPlayerStatsGateway;
     private final TeamService teamService;
+
+    private static final SportType SPORT_TYPE = SportType.BASKETBALL;
+
+    @Override
+    public SportType getType(){
+        return SPORT_TYPE;
+    }
 
     @Override
     public List<Sportsman> calculateRatingForEveryPlayer(GameStats gameStats) {
