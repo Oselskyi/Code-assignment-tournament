@@ -1,9 +1,10 @@
 package com.example.mostvaluableplayer.service.input;
 
+import com.example.mostvaluableplayer.exception.FolderIsEmptyException;
 import com.example.mostvaluableplayer.exception.SportTypeException;
 import com.example.mostvaluableplayer.exception.WrongFormatFileException;
 import com.example.mostvaluableplayer.model.GameStats;
-import com.example.mostvaluableplayer.model.Sport;
+import com.example.mostvaluableplayer.model.SportType;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -16,11 +17,14 @@ import java.util.*;
 public class ReaderFromCSV implements Reader {
 
     @Override
-    public List<GameStats> readFile(String filePath) {
+    public List<GameStats> readFile(String filesPath) {
         List<GameStats> gameStatsList = new ArrayList<>();
 
         GameStats gameStats = new GameStats();
-        File[] receivedFiles = new File(filePath).listFiles();
+        File[] receivedFiles = new File(filesPath).listFiles();
+        if (receivedFiles == null){
+            throw new FolderIsEmptyException("There are no files in this folder");
+        }
         for (File file : receivedFiles) {
             checkFileFormat(file);
             try {
@@ -46,7 +50,7 @@ public class ReaderFromCSV implements Reader {
     }
 
     private static void checkGameType(String game) {
-        if (!Arrays.stream(Sport.values()).map(Sport::getName).toList().contains(game)) {
+        if (!Arrays.stream(SportType.values()).map(SportType::getName).toList().contains(game)) {
             throw new SportTypeException(game + " is incorrect sport");
         }
     }
