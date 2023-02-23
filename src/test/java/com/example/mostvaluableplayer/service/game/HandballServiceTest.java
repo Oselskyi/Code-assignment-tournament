@@ -71,20 +71,20 @@ class HandballServiceTest {
 
     @Test
     void calculateRatingPlayerIfTeamWonGameTest(){
-        var player = new HandballPlayer("player 1", "nick1", 4, "Team A", 0, 20);
+        var player = new HandballPlayer("player 1", "nick1", 4, "Team A", 15, 20);
 
         var actualRating = new HandballService(new HandballPlayerStatsGateway(), new TeamServiceImpl())
                 .calculateGameRating(player, player.getTeamName());
 
-        assertEquals(39, actualRating);
+        assertEquals(20, actualRating);
     }
     @Test
     void calculateRatingPlayerIfTeamLooseGameTest(){
-        var player = new HandballPlayer("player 1", "nick1", 4, "Team A", 0, 20);
+        var player = new HandballPlayer("player 1", "nick1", 4, "Team A", 15, 20);
 
         var actualRating = new HandballService(new HandballPlayerStatsGateway(), new TeamServiceImpl())
                 .calculateGameRating(player, "fake team");
 
-        assertEquals(29, actualRating);
+        assertEquals(10, actualRating);
     }
 }
