@@ -4,7 +4,7 @@ import com.example.mostvaluableplayer.exception.FolderIsEmptyException;
 import com.example.mostvaluableplayer.exception.SportTypeException;
 import com.example.mostvaluableplayer.exception.WrongFormatFileException;
 import com.example.mostvaluableplayer.model.GameStats;
-import com.example.mostvaluableplayer.model.SportType;
+import com.example.mostvaluableplayer.model.GameType;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -50,7 +50,7 @@ public class ReaderFromCSV implements Reader {
     }
 
     private static void checkGameType(String game) {
-        if (!Arrays.stream(SportType.values()).map(SportType::getName).toList().contains(game)) {
+        if (!Arrays.stream(GameType.values()).map(GameType::getName).toList().contains(game)) {
             throw new SportTypeException(game + " is incorrect sport");
         }
     }

@@ -1,6 +1,6 @@
 package com.example.mostvaluableplayer.service.game;
 
-import com.example.mostvaluableplayer.model.SportType;
+import com.example.mostvaluableplayer.model.GameType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GameServiceFactory {
 
-    private static Map<SportType, GameService> gameServiceMap;
+    private static Map<GameType, GameService> gameServiceMap;
 
     @Autowired
     private GameServiceFactory(List<GameService> gameServices) {
@@ -23,7 +23,7 @@ public class GameServiceFactory {
     }
 
     public GameService getGameService(String gameType) {
-        return Optional.ofNullable(gameServiceMap.get(SportType.valueOf(gameType)))
+        return Optional.ofNullable(gameServiceMap.get(GameType.valueOf(gameType)))
                 .orElseThrow(IllegalArgumentException::new);
     }
 }

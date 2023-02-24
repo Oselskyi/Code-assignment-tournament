@@ -16,10 +16,10 @@ public class BasketballService implements GameService {
     private final PlayerStatsGateway<BasketballPlayer> basketballPlayerStatsGateway;
     private final TeamService teamService;
 
-    private static final SportType SPORT_TYPE = SportType.BASKETBALL;
+    private static final GameType SPORT_TYPE = GameType.BASKETBALL;
 
     @Override
-    public SportType getType(){
+    public GameType getType(){
         return SPORT_TYPE;
     }
 

@@ -7,7 +7,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public enum SportType {
+public enum GameType {
     BASKETBALL("BASKETBALL"), HANDBALL("HANDBALL");
 
     private final String name;

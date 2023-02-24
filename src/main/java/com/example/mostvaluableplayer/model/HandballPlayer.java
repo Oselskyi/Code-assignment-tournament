@@ -6,11 +6,12 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class HandballPlayer extends Player {
     private int goalMade;
     private int goalReceive;
 
+    @Builder
     public HandballPlayer(String name, String nickname, int number, String teamName, int goalMade, int goalReceive) {
         super(name, nickname, number, teamName);
         this.goalMade = goalMade;
