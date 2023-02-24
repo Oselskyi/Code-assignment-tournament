@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.function.Function.identity;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class GameServiceFactory {
 
     @Autowired
     private GameServiceFactory(List<GameService> gameServices) {
-        gameServiceMap = gameServices.stream().collect(Collectors.toMap(GameService::getType, Function.identity()));
+        gameServiceMap = gameServices.stream().collect(Collectors.toMap(GameService::getType, identity()));
     }
 
     public GameService getGameService(String gameType) {
