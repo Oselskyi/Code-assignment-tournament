@@ -1,6 +1,7 @@
 package com.example.mostvaluableplayer.model;
 
 import lombok.*;
+
 @Getter
 @Setter
 @NoArgsConstructor

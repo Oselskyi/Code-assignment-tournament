@@ -1,7 +1,7 @@
 package com.example.mostvaluableplayer.service.game;
 
-import com.example.mostvaluableplayer.model.*;
 import com.example.mostvaluableplayer.gateway.PlayerStatsGateway;
+import com.example.mostvaluableplayer.model.*;
 import com.example.mostvaluableplayer.service.team.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class BasketballService implements GameService {
     private static final GameType SPORT_TYPE = GameType.BASKETBALL;
 
     @Override
-    public GameType getType(){
+    public GameType getType() {
         return SPORT_TYPE;
     }
 

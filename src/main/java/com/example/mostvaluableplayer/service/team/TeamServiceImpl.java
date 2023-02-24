@@ -14,7 +14,7 @@ public class TeamServiceImpl implements TeamService {
         for (String team :
                 teamScoreMap.keySet()) {
             Integer score = teamScoreMap.get(team);
-            if (score == maxScore){
+            if (score == maxScore) {
                 throw new NoWinnerException("Every game must have a winner team");
             }
             if (score > maxScore) {

@@ -11,7 +11,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ReaderFromCSV implements Reader {
@@ -22,7 +24,7 @@ public class ReaderFromCSV implements Reader {
 
         GameStats gameStats = new GameStats();
         File[] receivedFiles = new File(filesPath).listFiles();
-        if (receivedFiles == null){
+        if (receivedFiles == null) {
             throw new FolderIsEmptyException("There are no files in this folder");
         }
         for (File file : receivedFiles) {

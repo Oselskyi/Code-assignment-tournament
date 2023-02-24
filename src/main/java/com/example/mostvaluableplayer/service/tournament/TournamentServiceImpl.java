@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TournamentServiceImpl implements TournamentService{
+public class TournamentServiceImpl implements TournamentService {
 
     private final Reader reader;
     private final GameServiceFactory gameServiceFactory;

@@ -1,18 +1,18 @@
 package com.example.mostvaluableplayer.service.team;
 
 import com.example.mostvaluableplayer.exception.NoWinnerException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TeamServiceImplTest {
 
     TeamService teamService = new TeamServiceImpl();
-    Map<String, Integer> teamScoreMap = new HashMap<>();;
+    Map<String, Integer> teamScoreMap = new HashMap<>();
 
     @Test
     void getWinnerIfTeamsHaveDifferentScoreTest() {
@@ -34,6 +34,4 @@ class TeamServiceImplTest {
         assertThrows(NoWinnerException.class, () -> teamService.getWinner(teamScoreMap),
                 "Every game must have a winner team");
     }
-
-
 }

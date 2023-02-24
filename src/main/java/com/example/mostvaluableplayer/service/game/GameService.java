@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface GameService {
     GameType getType();
+
     List<Sportsman> calculateRatingForEveryPlayer(GameStats gameStats);
 }
