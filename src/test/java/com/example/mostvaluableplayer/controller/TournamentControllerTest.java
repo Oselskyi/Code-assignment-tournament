@@ -49,15 +49,15 @@ class TournamentControllerTest {
         MvcResult mvcResult = mockMvc.perform(get(uri))
                 .andReturn();
         String content = mvcResult.getResponse().getContentAsString();
-        Sportsman actualMvp = mapFromJson(content, Sportsman.class);
+        Sportsman actualMvp = mapFromJson(content);
 
         assertEquals(expectedMvp, actualMvp);
     }
 
-    private <T> T mapFromJson(String json, Class<T> clazz)
+    private Sportsman mapFromJson(String json)
             throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, clazz);
+        return objectMapper.readValue(json, Sportsman.class);
     }
 }
