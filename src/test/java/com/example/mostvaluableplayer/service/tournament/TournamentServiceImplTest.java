@@ -25,7 +25,7 @@ class TournamentServiceImplTest {
     private Reader reader;
     @Mock
     private GameServiceFactory factory;
-    List<String> playersStats;
+    private List<String> playersStats;
 
     @BeforeEach
     public void setUp() {
